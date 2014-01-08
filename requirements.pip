@@ -1,7 +1,6 @@
 Django==1.5.5
 south
-django-helpdesk
-# XXX added in https://github.com/rossp/django-helpdesk/pull/191
-# checkout pr using https://gist.github.com/gnarf/5406589#comment-899774
+# https://github.com/rossp/django-helpdesk/pull/191
+-e git+https://github.com/leon/django-helpdesk.git@e7e2781d65c7db2f89b3b3c48517abee8f4c4cd7#egg=django-helpdesk
 -e git+https://github.com/tzangms/django-bootstrap-form.git#egg=django-bootstrap-form
 Markdown

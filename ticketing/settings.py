@@ -134,8 +134,7 @@ HELPDESK_SHOW_CHANGE_PASSWORD = True
 HELPDESK_SHOW_KB_ON_HOMEPAGE = True
 HELPDESK_PREPEND_ORG_NAME = "UNICEF Innovation"
 
-# XXX added in https://github.com/rossp/django-helpdesk/pull/191
-# checkout pr using https://gist.github.com/gnarf/5406589#comment-899774
+# https://github.com/rossp/django-helpdesk/pull/191
 HELPDESK_ORG_LOGO = '/static/unicef.png'
 
 INSTALLED_APPS = (
@@ -145,13 +144,9 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'django.contrib.markup',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
-    # XXX added in https://github.com/rossp/django-helpdesk/pull/191
-    # checkout pr using https://gist.github.com/gnarf/5406589#comment-899774
+    # added in https://github.com/rossp/django-helpdesk/pull/191
     'bootstrapform',
     'ticketing',
     'helpdesk',
