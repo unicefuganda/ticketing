@@ -5,5 +5,3 @@ django-helpdesk
 # checkout pr using https://gist.github.com/gnarf/5406589#comment-899774
 -e git+https://github.com/tzangms/django-bootstrap-form.git#egg=django-bootstrap-form
 Markdown
-django-registration
-django-registration-defaults

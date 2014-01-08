@@ -9,7 +9,6 @@ urlpatterns = patterns('',
     # url(r'^$', 'ticketing.views.home', name='home'),
     # url(r'^ticketing/', include('ticketing.foo.urls')),
     (r'', include('helpdesk.urls')),
-    (r'^accounts/', include('registration.backends.default.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

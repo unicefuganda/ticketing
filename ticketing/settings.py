@@ -1,4 +1,3 @@
-from registration_defaults.settings import *
 # Django settings for ticketing project.
 LOGIN_URL = '/login/'
 
@@ -156,8 +155,6 @@ INSTALLED_APPS = (
     'bootstrapform',
     'ticketing',
     'helpdesk',
-    'registration',
-    'registration_defaults',
     'south',
 )
 
