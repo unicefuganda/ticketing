@@ -1,0 +1,6 @@
+Django==1.5.5
+south
+django-helpdesk
+Markdown
+django-registration
+django-registration-defaults
