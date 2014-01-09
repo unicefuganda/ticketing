@@ -146,6 +146,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.markup',
+    'gunicorn',
     # added in https://github.com/rossp/django-helpdesk/pull/191
     'bootstrapform',
     'ticketing',
