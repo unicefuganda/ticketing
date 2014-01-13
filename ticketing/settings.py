@@ -151,6 +151,7 @@ INSTALLED_APPS = (
     'bootstrapform',
     'ticketing',
     'helpdesk',
+    'gunicorn',
     'raven.contrib.django.raven_compat',
     'south',
 )
