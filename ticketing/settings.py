@@ -34,7 +34,7 @@ TIME_ZONE = 'Africa/Kampala'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-UG'
 
 SITE_ID = 1
 
@@ -80,7 +80,6 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -90,15 +89,16 @@ SECRET_KEY = '77r#$_4y$*mcetu(uc8u%9*xs_q9^ji9y636-!=91mc(tzps24'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
+    'raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'raven.contrib.django.raven_compat.middleware.Sentry404CatchMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -109,24 +109,24 @@ ROOT_URLCONF = 'ticketing.urls'
 WSGI_APPLICATION = 'ticketing.wsgi.application'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Put strings here, like "/home/html/django_templates"
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
 from django.conf import global_settings
 TEMPLATE_CONTEXT_PROCESSORS = (
-            global_settings.TEMPLATE_CONTEXT_PROCESSORS +
-            ('django.core.context_processors.request',)
-     )
+    global_settings.TEMPLATE_CONTEXT_PROCESSORS +
+    ('django.core.context_processors.request',)
+)
 
 HELPDESK_DEFAULT_SETTINGS = {
-        'use_email_as_submitter': False,
-        'email_on_ticket_assign': False,
-        'email_on_ticket_change': False,
-        'login_view_ticketlist': False,
-        'email_on_ticket_apichange': False,
-        'tickets_per_page': 25
-        }
+    'use_email_as_submitter': False,
+    'email_on_ticket_assign': False,
+    'email_on_ticket_change': False,
+    'login_view_ticketlist': False,
+    'email_on_ticket_apichange': False,
+    'tickets_per_page': 25
+}
 HELPDESK_KB_ENABLED = True
 HELPDESK_KB_ENABLED_STAFF = True
 HELPDESK_NAVIGATION_ENABLED = True
@@ -151,12 +151,18 @@ INSTALLED_APPS = (
     'bootstrapform',
     'ticketing',
     'helpdesk',
+    'raven.contrib.django.raven_compat',
     'south',
 )
 
 ACCOUNT_ACTIVATION_DAYS = 2
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+
+RAVEN_CONFIG = {
+    'dsn': 'http://xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx:'
+           'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@sentry.unicefuganda.org/5',
+}
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -165,24 +171,42 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 # more details on how to customize your logging configuration.
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
+    'disable_existing_loggers': True,
+    'root': {
+        'level': 'WARNING',
+        'handlers': ['sentry'],
+    },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
     },
     'handlers': {
-        'mail_admins': {
+        'sentry': {
             'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
+            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
         }
     },
     'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
+        'django.db.backends': {
             'level': 'ERROR',
-            'propagate': True,
+            'handlers': ['console'],
+            'propagate': False,
         },
-    }
+        'raven': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        'sentry.errors': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+    },
 }

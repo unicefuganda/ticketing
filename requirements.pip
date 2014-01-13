@@ -5,3 +5,4 @@ south
 -e git+https://github.com/tzangms/django-bootstrap-form.git#egg=django-bootstrap-form
 Markdown
 gunicorn==18.0
+raven==4.0.3
