@@ -10,7 +10,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'ticketing',
-        'USER': 'ticketing',
+        'USER': 'postgres',
         'PASSWORD': '',
         'HOST': 'dbserver',
         'PORT': 6543,
