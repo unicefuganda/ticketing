@@ -6,3 +6,4 @@ south
 Markdown
 gunicorn==18.0
 raven==4.0.3
+psycopg2
