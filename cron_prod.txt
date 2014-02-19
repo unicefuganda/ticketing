@@ -1,0 +1,2 @@
+*/5 * * * * /var/www/ticketing/manage.py get_email
+0 * * * *   /var/www/ticketing/manage.py escalate_tickets
